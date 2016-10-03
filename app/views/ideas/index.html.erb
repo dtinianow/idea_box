@@ -1,0 +1,16 @@
+<h1>Ideabox</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Quality</th>
+  </tr>
+  <% @ideas.each do |idea| %>
+  <tr id='idea-<%= idea.id %>'>
+      <td><%= idea.title %></td>
+      <td><%= truncate(idea.body) if idea.body %></td>
+      <td><%= idea.quality %></td>
+  </tr>
+  <% end %>
+</table>
