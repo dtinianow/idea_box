@@ -1,3 +1,3 @@
-class Idea
-  enum quality: {swill: 0, plausible: 1, genius: 2}
+class Idea < ActiveRecord::Base
+  enum quality: %w[swill plausible genius]
 end

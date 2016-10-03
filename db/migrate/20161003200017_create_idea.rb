@@ -3,7 +3,7 @@ class CreateIdea < ActiveRecord::Migration[5.0]
     create_table :ideas do |t|
       t.string :title
       t.text :body
-      t.column :quality, :integer, default: 0
+      t.integer :quality, default: 0
 
       t.timestamps
     end
