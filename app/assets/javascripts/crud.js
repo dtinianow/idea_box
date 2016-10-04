@@ -41,7 +41,7 @@ function truncate( body ) {
 function handleError( error ) { console.log(error) };
 
 function createIdea() {
-  $('#submit-new-idea').on('click', function(){
+  $('#save-new-idea').on('click', function(){
     var ideaParams = {
       idea: {
         title: $('#idea-title').val(),
@@ -57,24 +57,6 @@ function createIdea() {
 }
 // function fetchPostsButton() {
 //   $("button[name=button-fetch]").on("click", fetchPosts)
-// }
-//
-// function createPost(){
-//   $("#create-post").on("click", function(){
-//     var postParams = {
-//       post: {
-//         description: $("#post-description").val()
-//       }
-//     }
-//
-//     $.post("http://turing-birdie.herokuapp.com/api/v1/posts.json", postParams)
-//     .then(createPostHTML)
-//     .then(renderPost)
-//     .fail(handleError)
-//     // url: "http://turing-birdie.herokuapp.com/api/v1/posts.json",
-//     // type: "post",
-//     // data: postParams
-//   })
 // }
 //
 // function deletePosts(){
