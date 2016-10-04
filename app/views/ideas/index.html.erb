@@ -1,18 +1,13 @@
 <h1 class='text-center well'>Ideabox</h1>
 
-<%= link_to “New Idea”, new_idea_path, remote: true, class: “new-idea-button” %>
-
 <table class='table table-striped table-bordered table-condensed'>
-  <tr>
-    <th>Title</th>
-    <th>Body</th>
-    <th>Quality</th>
-  </tr>
-  <% @ideas.each do |idea| %>
-  <tr id='idea-<%= idea.id %>'>
-      <td><%= idea.title %></td>
-      <td><%= truncate(idea.body) if idea.body %></td>
-      <td><%= idea.quality %></td>
-  </tr>
-  <% end %>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Quality</th>
+    </tr>
+  </thead>
+  <tbody id='ideas-table'>
+  </tbody>
 </table>
