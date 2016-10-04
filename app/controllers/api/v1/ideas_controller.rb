@@ -13,6 +13,14 @@ class Api::V1::IdeasController < ApplicationController
     end
   end
 
+  def destroy
+    if Idea.destroy(params[:id])
+      render :nothing => true, :status => 204
+    else
+      render "The item you are trying to delete does not exist"
+    end
+  end
+
 private
 
   def idea_params
