@@ -1,6 +1,6 @@
 $(document).ready(function() {
   getIdeas();
-})
+});
 
 function getIdeas() {
   var x = $.ajax({
@@ -8,26 +8,33 @@ function getIdeas() {
     type: 'get',
   }).then(collectIdeas)
   .then(renderIdea)
-}
+  .fail(handleError)
+};
 
 function collectIdeas( ideasData ) {
   return ideasData.map(createIdeaHTML);
-}
+};
 
 function renderIdea( ideaData ) {
-  $('#ideas-table').append(ideaData)
-}
+  $('#ideas-table').append(ideaData);
+};
 
 function createIdeaHTML( idea ) {
   return $(
-    "<tr class='idea-"
+    "<tr id='idea-"
     + idea.id
     + "'><td>"
     + idea.title
     + "</td><td>"
-    + idea.body
+    + truncate(idea.body)
     + "</td><td>"
     + idea.quality
     + "</td><td></tr>"
   )
-}
+};
+
+function truncate( body ){
+  return body.split(' ').slice(0, 100).join(" ")
+};
+
+function handleError( error ) { console.log(error) };
