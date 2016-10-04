@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.feature 'User can see ideas' do
+describe "User can see ideas", :type => :feature, :js => true do
   scenario 'they visit the root path and see title, description, and quality' do
 
-    alphabet_idea  = create(:alphabet_idea)
     backwards_idea = create(:backwards_idea)
-    ideas = Idea.all
+    alphabet_idea  = create(:alphabet_idea)
+    ideas = Idea.order(created_at: :desc)
     alphabet_truncated_body = 'a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v'
 
     visit root_path
@@ -13,7 +13,10 @@ RSpec.feature 'User can see ideas' do
     expect(ideas.first).to eq alphabet_idea
     expect(ideas.last).to eq backwards_idea
     expect(alphabet_idea.quality).to eq 'swill'
-    expect(page).to have_content 'Ideabox'
+    expect(page).to have_content 'Idea Box'
+
+    wait_for_ajax
+    find("#idea-#{alphabet_idea.id}")
 
     within("#idea-#{alphabet_idea.id}") do
       expect(page).to have_content alphabet_idea.title

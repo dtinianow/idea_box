@@ -1,4 +1,22 @@
-<h1 class='text-center well'>Ideabox</h1>
+<h1 class='text-center well'>Idea Box</h1>
+
+<form id="create-idea">
+    <div class="field">
+        <label for="title">Title:</label>
+        <input type="text" id="idea-title" name="idea[title]" required>
+    </div>
+
+    <div class="field">
+        <label for="body">Body:</label>
+        <input type="text" id="idea-body" name="idea[body]" required>
+    </div>
+
+    <div class="field">
+        <button type="submit" id="save-new-idea">Save</button>
+    </div>
+</form>
+
+<div id="results"></div>
 
 <table class='table table-striped table-bordered table-condensed'>
   <thead>

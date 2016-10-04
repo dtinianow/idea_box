@@ -1,10 +1,11 @@
 $(document).ready(function() {
   getIdeas();
+  createIdea();
 });
 
 function getIdeas() {
   var x = $.ajax({
-    url: 'http://localhost:3000/api/v1/ideas',
+    url: '/api/v1/ideas',
     type: 'get',
   }).then(collectIdeas)
   .then(renderIdea)
@@ -29,12 +30,47 @@ function createIdeaHTML( idea ) {
     + truncate(idea.body)
     + "</td><td>"
     + idea.quality
-    + "</td><td></tr>"
+    + "</td></tr>"
   )
 };
 
-function truncate( body ){
+function truncate( body ) {
   return body.split(' ').slice(0, 100).join(" ")
 };
 
 function handleError( error ) { console.log(error) };
+
+function createIdea() {
+  $('#save-new-idea').on('click', function(){
+    var ideaParams = {
+      idea: {
+        title: $('#idea-title').val(),
+        body: $('#idea-body').val(),
+        quality: 0
+      }
+    }
+    $.post('/api/v1/ideas', ideaParams)
+    .then(createIdeaHTML)
+    .then(renderIdea)
+    .fail(handleError)
+  })
+}
+// function fetchPostsButton() {
+//   $("button[name=button-fetch]").on("click", fetchPosts)
+// }
+//
+// function deletePosts(){
+//   $("#latest-posts").on("click", "#delete-post", function(){
+//     var $post = $(this).closest(".post")
+//     $.ajax({
+//       url: "http://turing-birdie.herokuapp.com/api/v1/posts/" + $post.data("id") + ".json",
+//       type: "delete"
+//     }).then(function(){
+//       $post.remove()
+//     }).fail(handleError)
+//   })
+// }
+//
+// function pollPosts(){
+//   setInterval(fetchPosts, 3000)
+// }
