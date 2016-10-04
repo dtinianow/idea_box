@@ -1,10 +1,11 @@
 $(document).ready(function() {
   getIdeas();
   createIdea();
+  deleteIdea();
 });
 
 function getIdeas() {
-  var x = $.ajax({
+  $.ajax({
     url: '/api/v1/ideas',
     type: 'get',
   }).then(collectIdeas)
@@ -22,7 +23,7 @@ function renderIdea( ideaData ) {
 
 function createIdeaHTML( idea ) {
   return $(
-    "<tr id='idea-"
+    "<tr class=idea data-id='"
     + idea.id
     + "'><td>"
     + idea.title
@@ -30,7 +31,7 @@ function createIdeaHTML( idea ) {
     + truncate(idea.body)
     + "</td><td>"
     + idea.quality
-    + "</td></tr>"
+    + "</td><td><button class='delete-idea'>Delete</button></td></tr>"
   )
 };
 
@@ -55,10 +56,23 @@ function createIdea() {
     .fail(handleError)
   })
 }
-// function fetchPostsButton() {
-//   $("button[name=button-fetch]").on("click", fetchPosts)
-// }
-//
+
+function deleteIdea() {
+  $('#ideas-table').on('click', '.delete-idea', function(){
+    var $idea = $(this).closest('.idea');
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'delete'
+    }).then(function(){
+      $idea.remove()
+    }).fail(handleError)
+  })
+}
+
+
+
+
+
 // function deletePosts(){
 //   $("#latest-posts").on("click", "#delete-post", function(){
 //     var $post = $(this).closest(".post")
