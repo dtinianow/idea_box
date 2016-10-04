@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 function getIdeas() {
   var x = $.ajax({
-    url: 'http://localhost:3000/api/v1/ideas',
+    url: '/api/v1/ideas',
     type: 'get',
   }).then(collectIdeas)
   .then(renderIdea)
@@ -40,9 +40,8 @@ function truncate( body ) {
 
 function handleError( error ) { console.log(error) };
 
-
 function createIdea() {
-  $('#create-idea').on('click', function(){
+  $('#submit-new-idea').on('click', function(){
     var ideaParams = {
       idea: {
         title: $('#idea-title').val(),
@@ -50,8 +49,7 @@ function createIdea() {
         quality: 0
       }
     }
-
-    $.post('http://localhost:3000/api/v1/ideas', postParams)
+    $.post('/api/v1/ideas', ideaParams)
     .then(createIdeaHTML)
     .then(renderIdea)
     .fail(handleError)

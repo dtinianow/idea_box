@@ -1,18 +1,18 @@
-<h1 class='text-center well'>Ideabox</h1>
+<h1 class='text-center well'>Idea Box</h1>
 
-<form id="create-idea" method="post" action="api/v1/ideas">
+<form id="create-idea">
     <div class="field">
         <label for="title">Title:</label>
-        <input type="text" id="idea-title" name="idea-title" required>
+        <input type="text" id="idea-title" name="idea[title]" required>
     </div>
 
     <div class="field">
-        <label for"body">Body:</label>
-        <input type="text" id="idea-body" name="idea-body" required>
+        <label for="body">Body:</label>
+        <input type="text" id="idea-body" name="idea[body]" required>
     </div>
 
     <div class="field">
-        <button type="submit">Create New Idea</button>
+        <button type="submit" id="submit-new-idea">Create New Idea</button>
     </div>
 </form>
 

@@ -13,7 +13,7 @@ describe "User can see ideas", :type => :feature, :js => true do
     expect(ideas.first).to eq alphabet_idea
     expect(ideas.last).to eq backwards_idea
     expect(alphabet_idea.quality).to eq 'swill'
-    expect(page).to have_content 'Ideabox'
+    expect(page).to have_content 'Idea Box'
 
     wait_for_ajax
     find("#idea-#{alphabet_idea.id}")
