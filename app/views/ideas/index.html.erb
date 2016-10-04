@@ -1,5 +1,22 @@
 <h1 class='text-center well'>Ideabox</h1>
 
+<form id="create-idea" method="post" action="api/v1/ideas">
+    <div class="field">
+        <label for="title">Title:</label>
+        <input type="text" id="idea-title" name="idea-title" required>
+    </div>
+
+    <div class="field">
+        <label for"body">Body:</label>
+        <input type="text" id="idea-body" name="idea-body" required>
+    </div>
+
+    <div class="field">
+        <button type="submit">Create New Idea</button>
+    </div>
+</form>
+
+<div id="results"></div>
 
 <table class='table table-striped table-bordered table-condensed'>
   <thead>

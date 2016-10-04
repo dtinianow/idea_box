@@ -1,6 +1,6 @@
 $(document).ready(function() {
   getIdeas();
-  // createIdea();
+  createIdea();
 });
 
 function getIdeas() {
