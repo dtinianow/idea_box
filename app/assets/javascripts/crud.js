@@ -2,7 +2,8 @@ $(document).ready(function() {
   getIdeas();
   createIdea();
   deleteIdea();
-  editIdea();
+  editIdeaTitle();
+  editIdeaBody();
 });
 
 function getIdeas() {
@@ -28,7 +29,7 @@ function createIdeaHTML( idea ) {
     + idea.id
     + "'><td class=idea-title contenteditable='true'>"
     + idea.title
-    + "</td><td>"
+    + "</td><td class=idea-body contenteditable='true'>"
     + truncate(idea.body)
     + "</td><td>"
     + idea.quality
@@ -81,6 +82,32 @@ function editIdea() {
       url: '/api/v1/ideas/' + $idea.data('id'),
       type: 'put',
       data: { idea: { title: newTitle } }
+    }).fail(handleError)
+  })
+}
+
+function editIdeaTitle() {
+  $('#ideas-table').on('blur', '.idea-title', function(){
+    var newTitle = $(this).text();
+    var $idea = $(this).closest('tr');
+
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'put',
+      data: { idea: { title: newTitle } }
+    }).fail(handleError)
+  })
+}
+
+function editIdeaBody() {
+  $('#ideas-table').on('blur', '.idea-body', function(){
+    var newBody = $(this).text();
+    var $idea = $(this).closest('tr');
+
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'put',
+      data: { idea: { body: newBody } }
     }).fail(handleError)
   })
 }
