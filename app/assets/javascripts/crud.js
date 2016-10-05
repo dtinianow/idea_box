@@ -54,10 +54,9 @@ function createIdea() {
       idea: {
         title: $('#idea-title').val(),
         body: $('#idea-body').val(),
-        quality: 0
+        quality: 'swill'
       }
     }
-
     $.post('/api/v1/ideas', ideaParams)
     .then(createIdeaHTML)
     .then(renderIdea)
@@ -133,6 +132,7 @@ function upvote(){
 
     if (qualityText != 'genius') {
       var newQuality = qualities[qualityIndex + 1]
+
       $.ajax({
         url: '/api/v1/ideas/' + $idea.data('id'),
         type: 'put',
@@ -152,6 +152,7 @@ function downvote(){
 
     if (qualityText != 'swill') {
       var newQuality = qualities[qualityIndex - 1]
+
       $.ajax({
         url: '/api/v1/ideas/' + $idea.data('id'),
         type: 'put',
