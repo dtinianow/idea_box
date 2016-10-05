@@ -5,6 +5,7 @@ $(document).ready(function() {
   editIdeaTitle();
   editIdeaBody();
   upvote();
+  downvote();
 });
 
 function getIdeas() {
@@ -121,29 +122,51 @@ function saveIdeaTitle() {
   }).fail(handleError)
 }
 
-var qualities = { 'swill': 0, 'plausible': 1, 'genius': 2 }
+var qualities = ['swill', 'plausible', 'genius']
 
 function upvote(){
   $('#ideas-table').on('click', '.upvote-idea', function(){
     var $idea = $(this).closest('tr');
-    var $quality = $idea.find('.idea-quality').text();
-    if ($quality != 'genius') {
+    var $quality = $idea.find('.idea-quality');
+    var qualityText = $quality.text();
+    var qualityIndex = qualities.indexOf(qualityText);
+
+    if (qualityText != 'genius') {
+      var newQuality = qualities[qualityIndex + 1]
       $.ajax({
         url: '/api/v1/ideas/' + $idea.data('id'),
         type: 'put',
-        data: { idea: { quality: ('plausible') } }
+        data: { idea: { quality: newQuality } }
       }).fail(handleError)
+      $quality.text(newQuality);
     }
-    // console.log($idea.data('id'))
-    // console.log($quality)
-    // console.log(qualities[$quality] + 1)
   })
 }
-    //When I click on upvote
-    //If quality is not genius, increment by 1
-    // //Send ajax call to update quality attribute
-    //     $.ajax({
-    //       url: '/api/v1/ideas/' + $idea.data('id'),
-    //       type: 'put',
-    //       data: { idea: { body: newBody } }
-    //     }).fail(handleError)
+
+function downvote(){
+  $('#ideas-table').on('click', '.downvote-idea', function(){
+    var $idea = $(this).closest('tr');
+    var $quality = $idea.find('.idea-quality');
+    var qualityText = $quality.text();
+    var qualityIndex = qualities.indexOf(qualityText);
+
+    if (qualityText != 'swill') {
+      var newQuality = qualities[qualityIndex - 1]
+      $.ajax({
+        url: '/api/v1/ideas/' + $idea.data('id'),
+        type: 'put',
+        data: { idea: { quality: newQuality } }
+      }).fail(handleError)
+      $quality.text(newQuality);
+    }
+  })
+}
+
+//When I click on upvote
+//If quality is not genius, increment by 1
+// //Send ajax call to update quality attribute
+//     $.ajax({
+//       url: '/api/v1/ideas/' + $idea.data('id'),
+//       type: 'put',
+//       data: { idea: { body: newBody } }
+//     }).fail(handleError)
