@@ -4,6 +4,7 @@ $(document).ready(function() {
   deleteIdea();
   editIdeaTitle();
   editIdeaBody();
+  upvote();
 });
 
 function getIdeas() {
@@ -31,9 +32,12 @@ function createIdeaHTML( idea ) {
     + idea.title
     + "</td><td class=idea-body contenteditable='true'>"
     + truncate(idea.body)
-    + "</td><td>"
+    + "</td><td class=idea-quality>"
     + idea.quality
-    + "</td><td><button class='delete-idea'>Delete</button></td></tr>"
+    + "<td><button type='button' class='btn btn-success upvote-idea'>Upvote</button></td>"
+    + "<td><button type='button' class='btn btn-primary downvote-idea'>Downvote</button></td>"
+    + "</td><td><button class='btn btn-danger delete-idea'>Delete</button></td>"
+    + "</tr>"
   )
 };
 
@@ -76,23 +80,23 @@ function deleteIdea() {
 function editIdeaTitle() {
   $('#ideas-table').on('blur', '.idea-title', saveIdeaTitle)
   $('#ideas-table').on('keydown', '.idea-title', function(e) {
-      if(e.keyCode == 13)
-      {
-          e.preventDefault();
-          $(this).blur();
-      }
-    })
+    if(e.keyCode == 13)
+    {
+      e.preventDefault();
+      $(this).blur();
+    }
+  })
 }
 
 function editIdeaBody() {
   $('#ideas-table').on('blur', '.idea-body', saveIdeaBody)
   $('#ideas-table').on('keydown', '.idea-body', function(e) {
-      if(e.keyCode == 13)
-      {
-          e.preventDefault();
-          $(this).blur();
-      }
-    })
+    if(e.keyCode == 13)
+    {
+      e.preventDefault();
+      $(this).blur();
+    }
+  })
 }
 
 function saveIdeaBody() {
@@ -116,3 +120,30 @@ function saveIdeaTitle() {
     data: { idea: { title: newTitle } }
   }).fail(handleError)
 }
+
+var qualities = { 'swill': 0, 'plausible': 1, 'genius': 2 }
+
+function upvote(){
+  $('#ideas-table').on('click', '.upvote-idea', function(){
+    var $idea = $(this).closest('tr');
+    var $quality = $idea.find('.idea-quality').text();
+    if ($quality != 'genius') {
+      $.ajax({
+        url: '/api/v1/ideas/' + $idea.data('id'),
+        type: 'put',
+        data: { idea: { quality: ('plausible') } }
+      }).fail(handleError)
+    }
+    // console.log($idea.data('id'))
+    // console.log($quality)
+    // console.log(qualities[$quality] + 1)
+  })
+}
+    //When I click on upvote
+    //If quality is not genius, increment by 1
+    // //Send ajax call to update quality attribute
+    //     $.ajax({
+    //       url: '/api/v1/ideas/' + $idea.data('id'),
+    //       type: 'put',
+    //       data: { idea: { body: newBody } }
+    //     }).fail(handleError)
