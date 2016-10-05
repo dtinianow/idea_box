@@ -4,6 +4,8 @@ $(document).ready(function() {
   deleteIdea();
   editIdeaTitle();
   editIdeaBody();
+  upvote();
+  downvote();
 });
 
 function getIdeas() {
@@ -31,9 +33,12 @@ function createIdeaHTML( idea ) {
     + idea.title
     + "</td><td class=idea-body contenteditable='true'>"
     + truncate(idea.body)
-    + "</td><td>"
+    + "</td><td class=idea-quality>"
     + idea.quality
-    + "</td><td><button class='delete-idea'>Delete</button></td></tr>"
+    + "<td><button type='button' class='btn btn-success upvote-idea'>Upvote</button></td>"
+    + "<td><button type='button' class='btn btn-primary downvote-idea'>Downvote</button></td>"
+    + "</td><td><button class='btn btn-danger delete-idea'>Delete</button></td>"
+    + "</tr>"
   )
 };
 
@@ -76,23 +81,23 @@ function deleteIdea() {
 function editIdeaTitle() {
   $('#ideas-table').on('blur', '.idea-title', saveIdeaTitle)
   $('#ideas-table').on('keydown', '.idea-title', function(e) {
-      if(e.keyCode == 13)
-      {
-          e.preventDefault();
-          $(this).blur();
-      }
-    })
+    if(e.keyCode == 13)
+    {
+      e.preventDefault();
+      $(this).blur();
+    }
+  })
 }
 
 function editIdeaBody() {
   $('#ideas-table').on('blur', '.idea-body', saveIdeaBody)
   $('#ideas-table').on('keydown', '.idea-body', function(e) {
-      if(e.keyCode == 13)
-      {
-          e.preventDefault();
-          $(this).blur();
-      }
-    })
+    if(e.keyCode == 13)
+    {
+      e.preventDefault();
+      $(this).blur();
+    }
+  })
 }
 
 function saveIdeaBody() {
@@ -115,4 +120,44 @@ function saveIdeaTitle() {
     type: 'put',
     data: { idea: { title: newTitle } }
   }).fail(handleError)
+}
+
+var qualities = ['swill', 'plausible', 'genius']
+
+function upvote(){
+  $('#ideas-table').on('click', '.upvote-idea', function(){
+    var $idea = $(this).closest('tr');
+    var $quality = $idea.find('.idea-quality');
+    var qualityText = $quality.text();
+    var qualityIndex = qualities.indexOf(qualityText);
+
+    if (qualityText != 'genius') {
+      var newQuality = qualities[qualityIndex + 1]
+      $.ajax({
+        url: '/api/v1/ideas/' + $idea.data('id'),
+        type: 'put',
+        data: { idea: { quality: newQuality } }
+      }).fail(handleError)
+      $quality.text(newQuality);
+    }
+  })
+}
+
+function downvote(){
+  $('#ideas-table').on('click', '.downvote-idea', function(){
+    var $idea = $(this).closest('tr');
+    var $quality = $idea.find('.idea-quality');
+    var qualityText = $quality.text();
+    var qualityIndex = qualities.indexOf(qualityText);
+
+    if (qualityText != 'swill') {
+      var newQuality = qualities[qualityIndex - 1]
+      $.ajax({
+        url: '/api/v1/ideas/' + $idea.data('id'),
+        type: 'put',
+        data: { idea: { quality: newQuality } }
+      }).fail(handleError)
+      $quality.text(newQuality);
+    }
+  })
 }
