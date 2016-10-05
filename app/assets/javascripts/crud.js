@@ -161,12 +161,3 @@ function downvote(){
     }
   })
 }
-
-//When I click on upvote
-//If quality is not genius, increment by 1
-// //Send ajax call to update quality attribute
-//     $.ajax({
-//       url: '/api/v1/ideas/' + $idea.data('id'),
-//       type: 'put',
-//       data: { idea: { body: newBody } }
-//     }).fail(handleError)
