@@ -2,6 +2,7 @@ $(document).ready(function() {
   getIdeas();
   createIdea();
   deleteIdea();
+  editIdea();
 });
 
 function getIdeas() {
@@ -25,7 +26,7 @@ function createIdeaHTML( idea ) {
   return $(
     "<tr class=idea data-id='"
     + idea.id
-    + "'><td>"
+    + "'><td class=idea-title contenteditable='true'>"
     + idea.title
     + "</td><td>"
     + truncate(idea.body)
@@ -69,22 +70,13 @@ function deleteIdea() {
   })
 }
 
-
-
-
-
-// function deletePosts(){
-//   $("#latest-posts").on("click", "#delete-post", function(){
-//     var $post = $(this).closest(".post")
-//     $.ajax({
-//       url: "http://turing-birdie.herokuapp.com/api/v1/posts/" + $post.data("id") + ".json",
-//       type: "delete"
-//     }).then(function(){
-//       $post.remove()
-//     }).fail(handleError)
-//   })
-// }
-//
-// function pollPosts(){
-//   setInterval(fetchPosts, 3000)
-// }
+function editIdea() {
+  $('#ideas-table').on('blur', '.idea-title', function(){
+    var newTitle = $(this).text();
+    // var tableRow = $(this).closest('tr');
+    console.log(newText);
+    // console.log(tableRow.text());
+    // var ideaId = tableRow.data('id')
+    // console.log(ideaId);
+  })
+}
