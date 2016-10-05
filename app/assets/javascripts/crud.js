@@ -51,6 +51,7 @@ function createIdea() {
         quality: 0
       }
     }
+
     $.post('/api/v1/ideas', ideaParams)
     .then(createIdeaHTML)
     .then(renderIdea)
@@ -61,6 +62,7 @@ function createIdea() {
 function deleteIdea() {
   $('#ideas-table').on('click', '.delete-idea', function(){
     var $idea = $(this).closest('.idea');
+
     $.ajax({
       url: '/api/v1/ideas/' + $idea.data('id'),
       type: 'delete'
@@ -73,10 +75,12 @@ function deleteIdea() {
 function editIdea() {
   $('#ideas-table').on('blur', '.idea-title', function(){
     var newTitle = $(this).text();
-    // var tableRow = $(this).closest('tr');
-    console.log(newText);
-    // console.log(tableRow.text());
-    // var ideaId = tableRow.data('id')
-    // console.log(ideaId);
+    var $idea = $(this).closest('tr');
+
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'put',
+      data: { idea: { title: newTitle } }
+    }).fail(handleError)
   })
 }
