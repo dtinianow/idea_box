@@ -13,6 +13,15 @@ class Api::V1::IdeasController < ApplicationController
     end
   end
 
+  def update
+    idea = Idea.find(params[:id])
+    if idea.update(idea_params)
+      render json: idea
+    else
+      render 'Invalid Update', status: 400
+    end
+  end
+
   def destroy
     if Idea.destroy(params[:id])
       render :nothing => true, :status => 204

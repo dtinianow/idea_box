@@ -2,6 +2,8 @@ $(document).ready(function() {
   getIdeas();
   createIdea();
   deleteIdea();
+  editIdeaTitle();
+  editIdeaBody();
 });
 
 function getIdeas() {
@@ -25,9 +27,9 @@ function createIdeaHTML( idea ) {
   return $(
     "<tr class=idea data-id='"
     + idea.id
-    + "'><td>"
+    + "'><td class=idea-title contenteditable='true'>"
     + idea.title
-    + "</td><td>"
+    + "</td><td class=idea-body contenteditable='true'>"
     + truncate(idea.body)
     + "</td><td>"
     + idea.quality
@@ -50,6 +52,7 @@ function createIdea() {
         quality: 0
       }
     }
+
     $.post('/api/v1/ideas', ideaParams)
     .then(createIdeaHTML)
     .then(renderIdea)
@@ -60,6 +63,7 @@ function createIdea() {
 function deleteIdea() {
   $('#ideas-table').on('click', '.delete-idea', function(){
     var $idea = $(this).closest('.idea');
+
     $.ajax({
       url: '/api/v1/ideas/' + $idea.data('id'),
       type: 'delete'
@@ -69,22 +73,41 @@ function deleteIdea() {
   })
 }
 
+function editIdea() {
+  $('#ideas-table').on('blur', '.idea-title', function(){
+    var newTitle = $(this).text();
+    var $idea = $(this).closest('tr');
 
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'put',
+      data: { idea: { title: newTitle } }
+    }).fail(handleError)
+  })
+}
 
+function editIdeaTitle() {
+  $('#ideas-table').on('blur', '.idea-title', function(){
+    var newTitle = $(this).text();
+    var $idea = $(this).closest('tr');
 
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'put',
+      data: { idea: { title: newTitle } }
+    }).fail(handleError)
+  })
+}
 
-// function deletePosts(){
-//   $("#latest-posts").on("click", "#delete-post", function(){
-//     var $post = $(this).closest(".post")
-//     $.ajax({
-//       url: "http://turing-birdie.herokuapp.com/api/v1/posts/" + $post.data("id") + ".json",
-//       type: "delete"
-//     }).then(function(){
-//       $post.remove()
-//     }).fail(handleError)
-//   })
-// }
-//
-// function pollPosts(){
-//   setInterval(fetchPosts, 3000)
-// }
+function editIdeaBody() {
+  $('#ideas-table').on('blur', '.idea-body', function(){
+    var newBody = $(this).text();
+    var $idea = $(this).closest('tr');
+
+    $.ajax({
+      url: '/api/v1/ideas/' + $idea.data('id'),
+      type: 'put',
+      data: { idea: { body: newBody } }
+    }).fail(handleError)
+  })
+}
