@@ -1,7 +1,7 @@
 <h1 class='text-center well'>Idea Box</h1>
 
 
-<div class='form-group text-center well'>
+<div id='new-idea-form' class='form-group text-center well'>
   <h4>Submit a New Idea:</h4>
   <form id="create-idea">
     <div class="field">
@@ -23,11 +23,16 @@
 <br>
 
 <div class='form-group text-center well'>
-  <form class="ui-filterable">
+  <form id='search-ideas' class="ui-filterable">
     <label>Search Ideas:</label>
     <input id="ideaFilter" data-type="search">
   </form>
+  <br>
+  <button id='sort-ideas-by-quality'>
+    Sort By Quality
+  </button>
 </div>
+
 
 <div id="results">
   <table data-filter="true" data-input="#ideaFilter" class='table table-striped table-bordered table-condensed'>

@@ -52,6 +52,7 @@ group :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

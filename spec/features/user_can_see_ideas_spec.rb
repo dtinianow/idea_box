@@ -1,27 +1,27 @@
 require 'rails_helper'
 
-describe "User can see ideas", :type => :feature, :js => true do
+describe "User can see ideas", :type => :feature do
   scenario 'they visit the root path and see title, description, and quality' do
-
-    backwards_idea = create(:backwards_idea)
-    alphabet_idea  = create(:alphabet_idea)
-    ideas = Idea.order(created_at: :desc)
-    alphabet_truncated_body = 'a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v'
 
     visit root_path
 
-    expect(ideas.first).to eq alphabet_idea
-    expect(ideas.last).to eq backwards_idea
-    expect(alphabet_idea.quality).to eq 'swill'
     expect(page).to have_content 'Idea Box'
 
-    wait_for_ajax
-    find("#idea-#{alphabet_idea.id}")
+    within('#new-idea-form') do
+      expect(page).to have_content 'Submit a New Idea:'
+    end
 
-    within("#idea-#{alphabet_idea.id}") do
-      expect(page).to have_content alphabet_idea.title
-      expect(page).to have_content alphabet_truncated_body
-      expect(page).to have_content alphabet_idea.quality
+    within('#search-ideas') do
+      expect(page).to have_content 'Search Ideas:'
+    end
+
+    within("#results") do
+      expect(page).to have_content 'Title'
+      expect(page).to have_content 'Body'
+      expect(page).to have_content 'Quality'
+      expect(page).to have_content 'Like'
+      expect(page).to have_content 'Dislike'
+      expect(page).to have_content 'Delete'
     end
   end
 end
