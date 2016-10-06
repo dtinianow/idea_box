@@ -34,7 +34,7 @@ describe 'Ideas' do
 
       idea = JSON.parse(response.body)
 
-      expect(response).to be_success
+      expect(response.status).to eq 201
       expect(idea.class).to eq(Hash)
       expect(idea['title']).to eq('Hey')
       expect(idea['body']).to eq('Hello')

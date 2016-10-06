@@ -1,6 +1,6 @@
-function editIdeaTitle() {
-  $('#ideas-table').on('blur', '.idea-title', saveIdeaTitle)
-  $('#ideas-table').on('keydown', '.idea-title', function(e) {
+function editIdea(targetClass, callback) {
+  $('#ideas-table').on('blur', targetClass, callback)
+  $('#ideas-table').on('keydown', targetClass, function(e) {
     if(e.keyCode == 13)
     {
       e.preventDefault();
@@ -9,7 +9,7 @@ function editIdeaTitle() {
   })
 }
 
-function saveIdeaTitle() {
+function updateTitle() {
   var newTitle = $(this).text();
   var $idea = $(this).closest('tr');
 
@@ -20,18 +20,7 @@ function saveIdeaTitle() {
   }).fail(handleError)
 }
 
-function editIdeaBody() {
-  $('#ideas-table').on('blur', '.idea-body', saveIdeaBody)
-  $('#ideas-table').on('keydown', '.idea-body', function(e) {
-    if(e.keyCode == 13)
-    {
-      e.preventDefault();
-      $(this).blur();
-    }
-  })
-}
-
-function saveIdeaBody() {
+function updateBody() {
   var newBody = $(this).text();
   var $idea = $(this).closest('tr');
 

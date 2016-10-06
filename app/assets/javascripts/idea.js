@@ -2,8 +2,8 @@ $(document).ready(function() {
   getIdeas();
   createIdea();
   deleteIdea();
-  editIdeaTitle();
-  editIdeaBody();
+  editIdea('.idea-title', updateTitle);
+  editIdea('.idea-body', updateBody);
   upvote();
   downvote();
   searchIdeas();
