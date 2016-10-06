@@ -6,6 +6,7 @@ $(document).ready(function() {
   editIdeaBody();
   upvote();
   downvote();
+  search();
 });
 
 function getIdeas() {
@@ -61,7 +62,7 @@ function createIdea() {
     .then(createIdeaHTML)
     .then(renderIdea)
     .fail(handleError)
-    
+
     e.preventDefault();
   })
 }
@@ -161,6 +162,26 @@ function downvote(){
         data: { idea: { quality: newQuality } }
       }).fail(handleError)
       $quality.text(newQuality);
+    }
+  })
+}
+
+function search() {
+  $('#ideaFilter').on('keyup', function(){
+    var $searchQuery = $('#ideaFilter').val()
+    checkMatches($searchQuery)
+  })
+}
+
+function checkMatches(searchQuery) {
+  var $ideas = $('#ideas-table').find('.idea')
+  $.each($ideas, function(index, idea){
+    title = $(idea).find('.idea-title').text()
+    body = $(idea).find('.idea-body').text()
+    if (title.indexOf(searchQuery) >= 0 || body.indexOf(searchQuery) >= 0) {
+      $(idea).show();
+    } else {
+      $(idea).hide();
     }
   })
 }
