@@ -64,6 +64,8 @@ function createIdea() {
     .fail(handleError)
 
     e.preventDefault();
+    $('#idea-title').val('')
+    $('#idea-body').val('')
   })
 }
 
