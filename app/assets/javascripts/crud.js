@@ -10,8 +10,8 @@ $(document).ready(function() {
 
 function getIdeas() {
   $.ajax({
-    url: '/api/v1/ideas',
     type: 'get',
+    url: '/api/v1/ideas'
   }).then(collectIdeas)
   .then(renderIdea)
   .fail(handleError)
@@ -22,7 +22,7 @@ function collectIdeas( ideasData ) {
 };
 
 function renderIdea( ideaData ) {
-  $('#ideas-table').append(ideaData);
+  $('#ideas-table').prepend(ideaData);
 };
 
 function createIdeaHTML( idea ) {
@@ -49,7 +49,7 @@ function truncate( body ) {
 function handleError( error ) { console.log(error) };
 
 function createIdea() {
-  $('#save-new-idea').on('click', function(){
+  $('#save-new-idea').on('click', function(e){
     var ideaParams = {
       idea: {
         title: $('#idea-title').val(),
@@ -61,6 +61,8 @@ function createIdea() {
     .then(createIdeaHTML)
     .then(renderIdea)
     .fail(handleError)
+    
+    e.preventDefault();
   })
 }
 
