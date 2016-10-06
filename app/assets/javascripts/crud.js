@@ -6,12 +6,13 @@ $(document).ready(function() {
   editIdeaBody();
   upvote();
   downvote();
+  search();
 });
 
 function getIdeas() {
   $.ajax({
-    url: '/api/v1/ideas',
     type: 'get',
+    url: '/api/v1/ideas'
   }).then(collectIdeas)
   .then(renderIdea)
   .fail(handleError)
@@ -22,7 +23,7 @@ function collectIdeas( ideasData ) {
 };
 
 function renderIdea( ideaData ) {
-  $('#ideas-table').append(ideaData);
+  $('#ideas-table').prepend(ideaData);
 };
 
 function createIdeaHTML( idea ) {
@@ -49,19 +50,20 @@ function truncate( body ) {
 function handleError( error ) { console.log(error) };
 
 function createIdea() {
-  $('#save-new-idea').on('click', function(){
+  $('#save-new-idea').on('click', function(e){
     var ideaParams = {
       idea: {
         title: $('#idea-title').val(),
         body: $('#idea-body').val(),
-        quality: 0
+        quality: 'swill'
       }
     }
-
     $.post('/api/v1/ideas', ideaParams)
     .then(createIdeaHTML)
     .then(renderIdea)
     .fail(handleError)
+
+    e.preventDefault();
   })
 }
 
@@ -133,6 +135,7 @@ function upvote(){
 
     if (qualityText != 'genius') {
       var newQuality = qualities[qualityIndex + 1]
+
       $.ajax({
         url: '/api/v1/ideas/' + $idea.data('id'),
         type: 'put',
@@ -152,12 +155,33 @@ function downvote(){
 
     if (qualityText != 'swill') {
       var newQuality = qualities[qualityIndex - 1]
+
       $.ajax({
         url: '/api/v1/ideas/' + $idea.data('id'),
         type: 'put',
         data: { idea: { quality: newQuality } }
       }).fail(handleError)
       $quality.text(newQuality);
+    }
+  })
+}
+
+function search() {
+  $('#ideaFilter').on('keyup', function(){
+    var $searchQuery = $('#ideaFilter').val()
+    checkMatches($searchQuery)
+  })
+}
+
+function checkMatches(searchQuery) {
+  var $ideas = $('#ideas-table').find('.idea')
+  $.each($ideas, function(index, idea){
+    title = $(idea).find('.idea-title').text()
+    body = $(idea).find('.idea-body').text()
+    if (title.indexOf(searchQuery) >= 0 || body.indexOf(searchQuery) >= 0) {
+      $(idea).show();
+    } else {
+      $(idea).hide();
     }
   })
 }
