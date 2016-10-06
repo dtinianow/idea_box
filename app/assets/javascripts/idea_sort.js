@@ -1,35 +1,27 @@
 function sortIdeas() {
   $('#sort-ideas-by-quality').on('click', function(){
-    $.ajax({
-      type: 'get',
-      url: '/api/v1/ideas'
-    }).then(sortByQuality)
-    .then(renderIdea)
-    .fail(handleError)
+    sortByQuality()
   })
 }
 
 function sortByQuality( ideas ) {
-  var flag = 0;
   var swillIdeas = [];
   var plausibleIdeas = [];
   var geniusIdeas = [];
+  var $ideas = $('#ideas-table').find('.idea')
 
-  ideas.forEach(function(idea){
-    if (idea.quality == 'swill') {
+  $.each($ideas, function(index, idea){
+    var quality = idea.children[2].innerHTML
+    if (quality == 'swill') {
       swillIdeas.push(idea);
-    } else if (idea.quality == 'plausible') {
+    } else if (quality == 'plausible') {
       plausibleIdeas.push(idea);
-    } else if (idea.quality == 'genius') {
+    } else if (quality == 'genius') {
       geniusIdeas.push(idea);
     }
   })
-  var sortedIdeas = geniusIdeas.concat(plausibleIdeas).concat(swillIdeas);
-  if (flag == 0) {
-    flag = 1;
-    return sortedIdeas;
-  } else {
-    flag = 0;
-    return sortedIdeas.reverse();
-  }
+  var $sortedIdeas = geniusIdeas.concat(plausibleIdeas).concat(swillIdeas);
+  $.each($sortedIdeas, function(index, idea){
+    $('#ideas-table').prepend(idea);
+  })
 }
