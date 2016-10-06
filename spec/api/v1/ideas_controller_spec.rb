@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 describe 'Ideas' do
-
   context "#Index" do
-    it 'returns JSON data on all ideas in reverse order' do
+    it 'can return all ideas in reverse order' do
       idea = create(:idea)
 
       get '/api/v1/ideas'
@@ -20,27 +19,27 @@ describe 'Ideas' do
       expect(idea['quality']).to eq('swill')
     end
   end
+
+  context "#Create" do
+    it 'can create a new idea' do
+      params = {
+          title: "Hey",
+          body: "Hello"
+      }
+
+      post '/api/v1/ideas', idea: params
+
+      idea = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(idea.class).to eq(Hash)
+      expect(idea['title']).to eq('Hey')
+      expect(idea['body']).to eq('Hello')
+      expect(idea['quality']).to eq('swill')
+    end
+  end
 end
-#
-# require 'rails_helper'
-#
-# describe "Items" do
-#   fixtures :items
-#
-#   it 'can return JSON data on all items' do
-#     get '/api/v1/items'
-#
-#     items = JSON.parse(response.body)
-#     item = items.first
-#
-#     expect(response).to be_success
-#     expect(items.length).to eq(2)
-#     expect(items.class).to eq(Array)
-#     expect(item.class).to eq(Hash)
-#     expect(item['id']).to eq(1)
-#     expect(item['name']).to eq("Robot")
-#     expect(item['description']).to eq("Beep boop")
-#   end
+
 #
 #   it 'can return JSON data on a specific item' do
 #     get '/api/v1/items/2'
