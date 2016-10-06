@@ -1,13 +1,13 @@
-$(document).ready(function() {
-  getIdeas();
-  createIdea();
-  deleteIdea();
-  editIdeaTitle();
-  editIdeaBody();
-  upvote();
-  downvote();
-  search();
-});
+// $(document).ready(function() {
+//   getIdeas();
+//   createIdea();
+//   deleteIdea();
+//   editIdeaTitle();
+//   editIdeaBody();
+//   upvote();
+//   downvote();
+//   search();
+// });
 
 function getIdeas() {
   $.ajax({
@@ -167,23 +167,23 @@ function downvote(){
     }
   })
 }
-
-function search() {
-  $('#ideaFilter').on('keyup', function(){
-    var $searchQuery = $('#ideaFilter').val()
-    checkMatches($searchQuery)
-  })
-}
-
-function checkMatches(searchQuery) {
-  var $ideas = $('#ideas-table').find('.idea')
-  $.each($ideas, function(index, idea){
-    title = $(idea).find('.idea-title').text()
-    body = $(idea).find('.idea-body').text()
-    if (title.indexOf(searchQuery) >= 0 || body.indexOf(searchQuery) >= 0) {
-      $(idea).show();
-    } else {
-      $(idea).hide();
-    }
-  })
-}
+//
+// function search() {
+//   $('#ideaFilter').on('keyup', function(){
+//     var $searchQuery = $('#ideaFilter').val()
+//     checkMatches($searchQuery)
+//   })
+// }
+//
+// function checkMatches(searchQuery) {
+//   var $ideas = $('#ideas-table').find('.idea')
+//   $.each($ideas, function(index, idea){
+//     var title = $(idea).find('.idea-title').text()
+//     var body = $(idea).find('.idea-body').text()
+//     if (title.indexOf(searchQuery) >= 0 || body.indexOf(searchQuery) >= 0) {
+//       $(idea).show();
+//     } else {
+//       $(idea).hide();
+//     }
+//   })
+// }
