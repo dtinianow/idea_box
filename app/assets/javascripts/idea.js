@@ -7,4 +7,5 @@ $(document).ready(function() {
   upvote();
   downvote();
   searchIdeas();
+  sortIdeas();
 });

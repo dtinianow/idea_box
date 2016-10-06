@@ -22,12 +22,17 @@
 
 <br>
 
-<div id='search-ideas' class='form-group text-center well'>
-  <form class="ui-filterable">
+<div class='form-group text-center well'>
+  <form id='search-ideas' class="ui-filterable">
     <label>Search Ideas:</label>
     <input id="ideaFilter" data-type="search">
   </form>
+  <br>
+  <button id='sort-ideas-by-quality'>
+    Sort By Quality
+  </button>
 </div>
+
 
 <div id="results">
   <table data-filter="true" data-input="#ideaFilter" class='table table-striped table-bordered table-condensed'>
