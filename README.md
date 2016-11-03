@@ -4,7 +4,7 @@
 
 ## Overview
 
-[Ideabox](http://ideabox9000.herokuapp.com/) is a site where users can save and keep track of their ideas.  It is a single page Rails application that utilizes jQuery and AJAX to render new content without reloading.
+[Ideabox](http://ideabox9000.herokuapp.com/) is a site where users can save and keep track of their ideas.  It is a single page Rails application that utilizes jQuery and AJAX to render new content without reloading the page.
 
 [This project](https://github.com/turingschool/curriculum/blob/master/source/projects/revenge_of_idea_box.markdown) was completed as part of the curriculum at the [Turing School of Software & Design](http://turing.io).  
 
@@ -48,7 +48,7 @@ New ideas can be created by filling out the 'Submit a New Idea' form.  Valid ide
 
 To delete an idea, simply click the delete button in the row of that idea in the table.
 
-#### Editing and Deleting Ideas
+#### Editing Ideas
 
 To edit an idea, click the text of either the idea body or title that you want to edit, and type in your changes.  Changes are saved by clicking outside the table box or hitting 'enter'.
 
